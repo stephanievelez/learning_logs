@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 web: gunicorn 'learning_log.wsgi'
 =======
 web: gunicorn 'name-of-application.wsgi'
