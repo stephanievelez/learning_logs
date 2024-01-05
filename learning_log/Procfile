@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+web: gunicorn 'learning_log.wsgi'
+=======
+web: gunicorn 'name-of-application.wsgi'
+>>>>>>> bcdf99e1f1f6e4a4b9461439300eb66b6b901427
