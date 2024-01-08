@@ -1,9 +1,9 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+
 
 def logout_view(request):
     """Log the user out"""
@@ -13,7 +13,7 @@ def logout_view(request):
 
 def register(request):
     """Register a new user"""
-    if request.method == "POST":
+    if request.method != "POST":
         #Display blank registration form
         form = UserCreationForm()
 
@@ -27,7 +27,7 @@ def register(request):
             authenticated_user = authenticate(username=new_user.username, password=request.POST['password1']) #get the password,after matched, of the 1st password..username and password
             #are saved under authenticated user
             login(request, authenticated_user) #creates a valid session for the new user
-            return HttpResponseRedirect(reverse('learning_logs:index'))
+            return HttpResponseRedirect(reverse("learning_logs:index"))
 
         context = {'form': form}
         return render(request, 'users/register.html', context)
