@@ -139,7 +139,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] #may need to change 'media' back to 'static'
-STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 #this tells Django I am going to upload an image at this location
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -171,11 +171,9 @@ BOOTSTRAP3 = {
     # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     #
     # #Allow all host headers.
-    ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 
     #Static asset configuration.
-    # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # STATIC_ROOT = 'staticfiles'
-    # STATICFILES_DIRS = (
-    #     os.path.join(BASE_DIR, 'static'),
-    # )
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
