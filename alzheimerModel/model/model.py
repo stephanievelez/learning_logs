@@ -1,7 +1,11 @@
 import json
 import urllib.request
 import numpy as np
+<<<<<<< HEAD
+import pathlib #you need all 3 requirements.txt
+=======
 import pathlib #you need all 3 requirements
+>>>>>>> c54120f32040c6b19904cd24bba0c8f9feb5e734
 temp = pathlib.PosixPath #otherwise you'll be an posixerror
 pathlib.PosixPath = pathlib.PureWindowsPath  #when loading the fastai model
 from django.shortcuts import render

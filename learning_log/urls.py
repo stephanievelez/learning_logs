@@ -34,7 +34,9 @@ urlpatterns = [
     path('alzheimerModel/', include('alzheimerModel.urls')),
 
     path('users/', include('users.urls')), #will match any URL that starts with users
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+
 #this urls will be unique to our images
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root =settings.MEDIA_ROOT)
