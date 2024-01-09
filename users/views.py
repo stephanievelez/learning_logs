@@ -29,5 +29,5 @@ def register(request):
             login(request, authenticated_user) #creates a valid session for the new user
             return HttpResponseRedirect(reverse("learning_logs:index"))
 
-        context = {'form': form}
-        return render(request, 'users/register.html', context)
+    context = {'form': form}
+    return render(request, 'users/register.html', context)

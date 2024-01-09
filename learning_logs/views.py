@@ -11,26 +11,27 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     """The home page for Learning Log"""
     return render(request, 'learning_logs/index.html')
-@login_required
+# @login_required
 def topics(request):
     """Show all topics."""
-    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+    # topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+    topics = Topic.objects.order_by('date_added')
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context) #context is a dictionary [names to access data: data we sent to template]
 
-@login_required
+# @login_required
 def topic(request, topic_id):
     """Show a single topic and all its entries"""
     topic = Topic.objects.get(id=topic_id)
     #Make sure the topic belongs to the current user
-    if topic.owner != request.user:
-        raise Http404
+    # if topic.owner != request.user:
+    #     raise Http404
     entries = topic.entry_set.order_by('-date_added') # -date_added to display most recent entries first
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
 
 
-@login_required
+# @login_required
 def new_topic(request):
     """"Add a new topic"""
     if request.method != 'POST': #determines if request is GET or POST; GET requests are for reading data, POST requests are for submitting data
@@ -71,27 +72,6 @@ def new_topic(request):
 
 
 # @login_required
-# def edit_entry(request, entry_id):
-#     """"Edit an existing entry"""
-#     entry = Entry.objects.get(id=entry_id)
-#     topic = entry.topic
-#     if topic.owner != request.user:
-#         raise Http404
-#
-#     if request.method != 'POST':
-#         #Initial request; pre-fill form with the current entry
-#         form = EntryForm(instance=entry) #instance argument tells Django to create a form prefilled with the information from the existing entry object, which the user will be able to see so they can edit
-#     else:
-#         #POST data submitted; process data
-#         form = EntryForm(instance=entry, data=request.POST) #instance argument tells Django to create a form prefilled with the information from the existing entry object and then update it with any relevant data from request.POST
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic.id])) #reverse() gets URL from a named URL pattern, so Django redirects to the topics page
-#     #Display a blank or invalid form
-#     context = {'entry': entry, 'topic': topic, 'form': form}
-#     return render(request, 'learning_logs/edit_entry.html', context)
-
-@login_required
 def edit_entry(request, entry_id):
     """"Edit an existing entry"""
     entry = Entry.objects.get(id=entry_id)
@@ -102,8 +82,6 @@ def edit_entry(request, entry_id):
     if request.method != 'POST':
         #Initial request; pre-fill form with the current entry
         form = EntryForm(instance=entry) #instance argument tells Django to create a form prefilled with the information from the existing entry object, which the user will be able to see so they can edit
-
-        # img_url = topic_image.topic_Img.path
     else:
         #POST data submitted; process data
         form = EntryForm(instance=entry, data=request.POST) #instance argument tells Django to create a form prefilled with the information from the existing entry object and then update it with any relevant data from request.POST
@@ -111,21 +89,46 @@ def edit_entry(request, entry_id):
             form.save()
             return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic.id])) #reverse() gets URL from a named URL pattern, so Django redirects to the topics page
     #Display a blank or invalid form
-    topic_image = Entry.objects.all()
-    # img_url = topic_image.topic_Img.path
-    context = {'entry': entry, 'topic': topic, 'form': form, 'topic_image': topic_image}
+    context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
-# def display_hotel_images(request):
-#     if request.method == 'GET':
-#         # getting all the objects of hotel.
-#         Hotels = Hotel.objects.all()
-#         return render((request, 'display_hotel_images.html',
-#                        {'hotel_images': Hotels}))
+
+# @login_required
+# def edit_entry(request, entry_id):
+#     """"Edit an existing entry"""
+#     entry = Entry.objects.get(id=entry_id)
+#     topic = entry.topic
+#     if topic.owner != request.user:
+#         raise Http404
+#
+#     if request.method != 'POST':
+#         #Initial request; pre-fill form with the current entry
+#         form = EntryForm(instance=entry) #instance argument tells Django to create a form prefilled with the information from the existing entry object, which the user will be able to see so they can edit
+#
+#         # img_url = topic_image.topic_Img.path
+#     else:
+#         #POST data submitted; process data
+#         form = EntryForm(instance=entry, data=request.POST) #instance argument tells Django to create a form prefilled with the information from the existing entry object and then update it with any relevant data from request.POST
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic.id])) #reverse() gets URL from a named URL pattern, so Django redirects to the topics page
+#     #Display a blank or invalid form
+#     topic_image = Entry.objects.all()
+#     # img_url = topic_image.topic_Img.path
+#     context = {'entry': entry, 'topic': topic, 'form': form, 'topic_image': topic_image}
+#     return render(request, 'learning_logs/edit_entry.html', context)
+
+def topic_images(request):
+    if request.method == 'GET':
+        # getting all the objects of hotel.
+        topic_images = Entry.objects.all()
+
+
+        return render((request, 'learning_logs/edit_entry.html', {'topic_image': topic_images}))
 
 
 
 
-@login_required
+# @login_required
 def new_entry(request, topic_id):
     """"Add a new entry for a particular topic"""
     topic = Topic.objects.get(id=topic_id)
